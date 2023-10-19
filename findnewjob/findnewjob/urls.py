@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Resumes.views import ResumeAPIView
+from Vacancies.views import VacancyAPIView, VacancyListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('rest_framework.urls')),
     path('api/users/', include('Users.urls', namespace='Users')),
     path('api/resumes', ResumeAPIView.as_view())
+    path('api/vacancies/', VacancyAPIView.as_view()),
+    path('api/create_vacancies/', VacancyListCreateView.as_view())
 ]
