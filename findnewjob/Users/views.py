@@ -1,8 +1,10 @@
-from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
-from Users.serializers import ApplicantRegisterSerializer, EmployerRegisterSerializer
+from Users.models import Applicant, Employer
+from Users.permissions import ApplicantPermission, EmployerPermission
+from Users.serializers import ApplicantRegisterSerializer, EmployerRegisterSerializer, ApplicantSerializer, \
+    EmployerSerializer
 
 
 class ApplicantRegisterApiView(generics.CreateAPIView):
@@ -16,4 +18,23 @@ class EmployerRegisterApiView(generics.CreateAPIView):
     
 
 
+class ApplicantProfileApiView(generics.RetrieveAPIView):
+    queryset = Applicant.objects.all()
+    serializer_class = ApplicantSerializer
 
+
+class ApplicantUpdateApiView(generics.RetrieveUpdateAPIView):
+    queryset = Applicant.objects.all()
+    serializer_class = ApplicantSerializer
+    permission_classes = (ApplicantPermission,)
+
+
+class EmployerUpdateApiView(generics.RetrieveUpdateAPIView):
+    queryset = Employer.objects.all()
+    serializer_class = EmployerSerializer
+    permission_classes = (EmployerPermission,)
+
+
+class EmployerProfileApiView(generics.RetrieveAPIView):
+    queryset = Employer.objects.all()
+    serializer_class = EmployerSerializer

@@ -14,9 +14,10 @@ class ApplicantRegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.EmailField()
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password],
+    password = serializers.CharField(write_only=True, required=True,
                                      style={'input_type': 'password'})
-    password2 = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    password2 = serializers.CharField(write_only=True, required=True,
+                                      style={'input_type': 'password'})
     date_joined = serializers.DateTimeField(read_only=True)
 
     def validate(self, attrs):
@@ -70,10 +71,31 @@ class EmployerRegisterSerializer(serializers.Serializer):
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applicant
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('user', 'first_name', 'last_name', 'email')
+        read_only_fields = ['user']
+
+    def update(self, instance, validated_data):
+        user = User.objects.get(id=instance.pk)
+        user.email = validated_data.get('email', user.email)
+        user.save()
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+        return instance
 
 
 class EmployerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employer
-        fields = ('company_name', 'email')
+        fields = ('user', 'company_name', 'email')
+        read_only_fields = ['user']
+
+    def update(self, instance, validated_data):
+        user = User.objects.get(id=instance.pk)
+        user.email = validated_data.get('email', user.email)
+        user.save()
+        instance.company_name = validated_data.get('company_name', instance.company_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+        return instance
