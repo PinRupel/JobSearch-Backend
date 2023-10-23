@@ -18,13 +18,13 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 
 from Resumes.views import ResumeAPIView
-from Vacancies.views import VacancyAPIView, VacancyListCreateView
+from Vacancies.views import VacancyListCreateView, VacancyAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/users/', include('Users.urls', namespace='Users')),
-    path('api/resumes', ResumeAPIView.as_view()),
+    path('api/resumes', ResumeAPIView.as_view(), name='create-resume'),
     path('api/vacancies/', VacancyAPIView.as_view()),
-    path('api/create_vacancies/', VacancyListCreateView.as_view())
+    path('api/create_vacancies/', VacancyListCreateView.as_view(), name='create-vacancies')
 ]

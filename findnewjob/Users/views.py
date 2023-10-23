@@ -15,6 +15,7 @@ class ApplicantRegisterApiView(generics.CreateAPIView):
 class EmployerRegisterApiView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = EmployerRegisterSerializer
+    
 
 
 class ApplicantProfileApiView(generics.RetrieveAPIView):
