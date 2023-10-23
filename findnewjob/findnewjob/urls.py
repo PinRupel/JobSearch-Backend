@@ -22,7 +22,6 @@ from Vacancies.views import VacancyAPIView, VacancyListCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('rest_framework.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/users/', include('Users.urls', namespace='Users')),
     path('api/resumes', ResumeAPIView.as_view()),
