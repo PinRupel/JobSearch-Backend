@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from rest_framework import generics
 
-from models import Vacancy
+from .models import Vacancy
 from Vacancies.serializers import VacancySerializer
 
 
