@@ -95,7 +95,7 @@ class ApplicantUpdateApiTestCase(APITestCase):
         }
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-        self.response_patch = self.client.patch(reverse("Users:applicant_profile_edit", kwargs={'pk': self.applicant.user_id}), self.payload)
+        self.response_patch = self.client.patch(reverse("Users:applicant-detail", kwargs={'pk': self.applicant.user_id}), self.payload)
 
     def test_update_patch(self):
         self.assertEqual(self.response_patch.status_code, 200)
@@ -118,7 +118,7 @@ class EmployerUpdateApiTestCase(APITestCase):
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         self.response_patch = self.client.patch(
-            reverse("Users:employer_profile_edit", kwargs={'pk': self.employer.user_id}), self.payload)
+            reverse("Users:employer-detail", kwargs={'pk': self.employer.user_id}), self.payload)
 
     def test_update_patch(self):
         self.assertEqual(self.response_patch.status_code, 200)
