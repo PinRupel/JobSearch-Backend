@@ -1,13 +1,18 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
+
 from .views import *
 
 app_name = 'Users'
 
+router_applicant = routers.DefaultRouter()
+router_applicant.register(r'applicant', ApplicantViewSet)
+router_employer = routers.DefaultRouter()
+router_employer.register(r'employer', EmployerViewSet)
+
 urlpatterns = [
     path('registr/applicant/', ApplicantRegisterApiView.as_view(), name='applicant-register'),
     path('registr/employer/', EmployerRegisterApiView.as_view(), name='employer-register'),
-    path('applicant/profile/<int:pk>/', ApplicantProfileApiView.as_view(), name='applicant_profile'),
-    path('employer/profile/<int:pk>/', EmployerProfileApiView.as_view(), name='employer_profile'),
-    path('applicant/profile/<int:pk>/edit/', ApplicantUpdateApiView.as_view(), name='applicant_profile_edit'),
-    path('employer/profile/<int:pk>/edit/', EmployerUpdateApiView.as_view(), name='employer_profile_edit')
+    path('', include(router_applicant.urls)),
+    path('', include(router_employer.urls))
 ]

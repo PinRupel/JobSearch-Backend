@@ -1,8 +1,8 @@
-from rest_framework import generics
+from rest_framework import generics, mixins, viewsets
 from rest_framework.permissions import AllowAny
 
 from Users.models import Applicant, Employer
-from Users.permissions import ApplicantPermission, EmployerPermission
+from Users.permissions import IsCurApplicantOrReadOnly, IsCurEmployerOrReadOnly
 from Users.serializers import ApplicantRegisterSerializer, EmployerRegisterSerializer, ApplicantSerializer, \
     EmployerSerializer
 
@@ -15,26 +15,19 @@ class ApplicantRegisterApiView(generics.CreateAPIView):
 class EmployerRegisterApiView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = EmployerRegisterSerializer
-    
 
 
-class ApplicantProfileApiView(generics.RetrieveAPIView):
+class ApplicantViewSet(mixins.UpdateModelMixin,
+                       mixins.RetrieveModelMixin,
+                       viewsets.GenericViewSet):
     queryset = Applicant.objects.all()
     serializer_class = ApplicantSerializer
+    permission_classes = (IsCurApplicantOrReadOnly,)
 
 
-class ApplicantUpdateApiView(generics.RetrieveUpdateAPIView):
-    queryset = Applicant.objects.all()
-    serializer_class = ApplicantSerializer
-    permission_classes = (ApplicantPermission,)
-
-
-class EmployerUpdateApiView(generics.RetrieveUpdateAPIView):
+class EmployerViewSet(mixins.UpdateModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
     queryset = Employer.objects.all()
     serializer_class = EmployerSerializer
-    permission_classes = (EmployerPermission,)
-
-
-class EmployerProfileApiView(generics.RetrieveAPIView):
-    queryset = Employer.objects.all()
-    serializer_class = EmployerSerializer
+    permission_classes = (IsCurEmployerOrReadOnly,)
