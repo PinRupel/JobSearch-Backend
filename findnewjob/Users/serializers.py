@@ -44,7 +44,7 @@ class EmployerRegisterSerializer(serializers.Serializer):
     user = UserSerializer(read_only=True)
     company_name = serializers.CharField()
     email = serializers.EmailField()
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password],
+    password = serializers.CharField(write_only=True, required=True,
                                      style={'input_type': 'password'})
     password2 = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
     date_joined = serializers.DateTimeField(read_only=True)
