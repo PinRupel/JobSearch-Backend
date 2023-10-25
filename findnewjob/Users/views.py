@@ -25,6 +25,7 @@ class ApplicantViewSet(mixins.UpdateModelMixin,
     permission_classes = (IsCurApplicantOrReadOnly,)
 
 
+
 class EmployerViewSet(mixins.UpdateModelMixin,
                       mixins.RetrieveModelMixin,
                       viewsets.GenericViewSet):
