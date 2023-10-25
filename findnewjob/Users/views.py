@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 from Users.models import Applicant, Employer
-from Users.permissions import ApplicantPermission, EmployerPermission
+from Users.permissions import ApplicantPermission
 from Users.serializers import ApplicantRegisterSerializer, EmployerRegisterSerializer, ApplicantSerializer, \
     EmployerSerializer
 
@@ -29,10 +29,10 @@ class ApplicantUpdateApiView(generics.RetrieveUpdateAPIView):
     permission_classes = (ApplicantPermission,)
 
 
-class EmployerUpdateApiView(generics.RetrieveUpdateAPIView):
-    queryset = Employer.objects.all()
-    serializer_class = EmployerSerializer
-    permission_classes = (EmployerPermission,)
+# class EmployerUpdateApiView(generics.RetrieveUpdateAPIView):
+#     queryset = Employer.objects.all()
+#     serializer_class = EmployerSerializer
+#     permission_classes = (EmployerPermission,)
 
 
 class EmployerProfileApiView(generics.RetrieveAPIView):

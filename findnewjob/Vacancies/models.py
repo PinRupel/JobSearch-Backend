@@ -20,7 +20,7 @@ class Vacancy(models.Model):
     job_title = models.CharField(max_length=100)
     salary = models.IntegerField()
     description = models.TextField()
-    time_of_creation = models.DateTimeField(auto_now_add=True)
+    time_of_creation = models.DateTimeField(auto_now=True)
     education = models.CharField(max_length=1, choices=CHOICES_EDUCATION)
     schedule = models.CharField(max_length=1, choices=CHOICES_SCHEDULE)
 

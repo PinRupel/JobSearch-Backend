@@ -16,3 +16,19 @@ class VacancySerializer(serializers.ModelSerializer):
             'education',
             'schedule')
         read_only_fields = ('time_of_creation', 'name_company',)
+
+
+class VacancyUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vacancy
+        fields = (
+            'name_company',
+            'job_title',
+            'salary',
+            'description',
+            'time_of_creation',
+            'education',
+            'schedule')
+        read_only_fields = ('name_company',)
+
+
