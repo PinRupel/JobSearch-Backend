@@ -22,3 +22,8 @@ class ResumeSerializer(serializers.ModelSerializer):
             'country_of_citizenship',
         )
         read_only_fieldz = ('user',)
+#
+# class InvitationSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ResumeInvitation
+#         fields = ("vacancy", "message",)
