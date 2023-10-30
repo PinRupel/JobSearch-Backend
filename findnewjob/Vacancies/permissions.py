@@ -22,3 +22,15 @@ class VacancyPermission(permissions.BasePermission):
                             return True
             return False
         return False
+
+# class ResponsePermission(permissions.BasePermission):
+#
+#     def has_object_permission(self, request, view, obj):
+#         if request.method in permissions.SAFE_METHODS:
+#             if obj.resipient == request.user.id or obj.sender == request.user.id:
+#                 return True
+#         elif request.method == 'POST':
+#             if request.user.is_authenticated and isinstance(request.auth, Token):
+#                 if request.user.is_applicant:
+#                     return True
+#         return False
