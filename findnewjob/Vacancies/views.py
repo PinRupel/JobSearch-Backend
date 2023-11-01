@@ -1,7 +1,9 @@
-from rest_framework import viewsets
-from .models import Vacancy
-from Vacancies.serializers import VacancySerializer
-from .permissions import VacancyPermission
+from rest_framework import viewsets, mixins
+from rest_framework.generics import get_object_or_404
+
+from .models import Vacancy, VacancyResponse
+from Vacancies.serializers import VacancySerializer, VacancyResponseSerializer
+from .permissions import VacancyPermission, ResponsePermission
 
 
 class VacancyAPIViewSet(viewsets.ModelViewSet):
@@ -12,13 +14,17 @@ class VacancyAPIViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(name_company=self.request.user.employer)
 
-# class VacancyResponseAPIview(generics.CreateAPIView):
-#     queryset = VacancyResponse.objects.all()
-#     serializer_class = VacancyResponseSerializer
-#     permission_classes = [ResponsePermission]
-#
-#     def perform_create(self, serializer):
-#         sender = self.request.user.applicant
-#         vacancy = Vacancy.objects.get_object_or_404(id=self.kwargs['pk'])
-#         recipient = vacancy.name_company
-#         serializer.save(sender=sender, vacancy=vacancy, recipient=recipient)
+
+class VacancyResponseAPIViewSet(mixins.CreateModelMixin,
+                                mixins.RetrieveModelMixin,
+                                mixins.ListModelMixin,
+                                viewsets.GenericViewSet):
+    queryset = VacancyResponse.objects.all()
+    serializer_class = VacancyResponseSerializer
+    permission_classes = [ResponsePermission]
+
+    def perform_create(self, serializer):
+        applicant_id = self.request.user.applicant
+        vacancy = get_object_or_404(Vacancy, id=self.kwargs['pk'])
+        employer_id = vacancy.name_company
+        serializer.save(applicant_id=applicant_id, vacancy=vacancy, employer_id=employer_id)
