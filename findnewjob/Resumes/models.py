@@ -27,8 +27,10 @@ class Resume(models.Model):
         return f"{self.last_name} {self.first_name}"
 
 
-class ResumeInvitation(models.Model):
-    sender = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='sent_invetion')
-    recipient = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='get_invetion')
+class ResumeResponse(models.Model):
+    applicant = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_invetion')
+    employer = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='get_invetion')
     resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
     message = models.TextField()
+
+
