@@ -6,6 +6,7 @@ app_name = 'Vacancies'
 
 router = routers.DefaultRouter()
 router.register(r'vacancies', VacancyAPIViewSet)
+
 response_router = routers.DefaultRouter()
 response_router.register(r'response', VacancyResponseAPIViewSet)
 

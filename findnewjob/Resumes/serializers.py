@@ -21,7 +21,8 @@ class ResumeSerializer(serializers.ModelSerializer):
             'city',
             'country_of_citizenship',
         )
-        read_only_fieldz = ('user',)
+        read_only_fields = ('user',)
+
 
 
 class InvitationSerializer(serializers.ModelSerializer):
@@ -29,3 +30,4 @@ class InvitationSerializer(serializers.ModelSerializer):
         model = ResumeResponse
         fields = ('message',)
         read_only_fields = ('applicant', 'employer', 'resume',)
+
