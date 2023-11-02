@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Resume
+from .models import Resume, ResumeResponse
 
 
 class ResumeSerializer(serializers.ModelSerializer):
@@ -21,4 +21,13 @@ class ResumeSerializer(serializers.ModelSerializer):
             'city',
             'country_of_citizenship',
         )
-        read_only_fieldz = ('user',)
+        read_only_fields = ('user',)
+
+
+
+class InvitationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResumeResponse
+        fields = ('message',)
+        read_only_fields = ('applicant', 'employer', 'resume',)
+

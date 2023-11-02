@@ -1,5 +1,6 @@
 from django.db import models
 
+from Resumes.models import Resume
 from Users.models import Employer, Applicant
 
 
@@ -26,8 +27,9 @@ class Vacancy(models.Model):
 
 
 class VacancyResponse(models.Model):
-    sender = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_response')
-    recipient = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='received_response')
+    applicant_id = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_response')
+    employer_id = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='received_response')
     vacancy = models.ForeignKey(to=Vacancy, on_delete=models.CASCADE)
     message = models.TextField(blank=True)
-    accepted = models.BooleanField(default=False)
+    status = models.BooleanField(null=True, default=None)
+    resume = models.ForeignKey(to=Resume, default=None, on_delete=models.CASCADE, related_name='resume_response')
