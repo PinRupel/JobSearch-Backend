@@ -6,7 +6,6 @@ app_name = 'Vacancies'
 
 router = routers.DefaultRouter()
 router.register(r'vacancies', VacancyAPIViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
 ]
