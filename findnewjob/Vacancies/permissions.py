@@ -32,6 +32,7 @@ class ResponsePermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             if obj.employer_id == request.user.id or obj.applicant_id == request.user.id:
                 return True
+        return False
 
     def has_permission(self, request, view):
         vacancy_id = view.kwargs.get('pk')
