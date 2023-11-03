@@ -17,7 +17,7 @@ class Vacancy(models.Model):
         ('T', 'Два / Два')
     ]
 
-    name_company = models.ForeignKey(to=Employer, on_delete=models.CASCADE)
+    company = models.ForeignKey(to=Employer, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=100)
     salary = models.IntegerField()
     description = models.TextField()
@@ -27,9 +27,8 @@ class Vacancy(models.Model):
 
 
 class VacancyResponse(models.Model):
-    applicant_id = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_response')
-    employer_id = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='received_response')
+    applicant = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_response')
+    employer = models.ForeignKey(to=Employer, on_delete=models.CASCADE, related_name='received_response')
     vacancy = models.ForeignKey(to=Vacancy, on_delete=models.CASCADE)
     message = models.TextField(blank=True)
-    status = models.BooleanField(null=True, default=None)
     resume = models.ForeignKey(to=Resume, default=None, on_delete=models.CASCADE, related_name='resume_response')

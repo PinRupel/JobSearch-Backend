@@ -5,7 +5,7 @@ from Resumes.models import ResumeResponse
 
 
 class ResumePermission(permissions.BasePermission):
-    message = "У вас нет прав для создания резюме"
+    message = "У вас нет прав для выполнения этого действия"
 
     def has_object_permission(self, request, view, obj):
         if request.method in ['GET', 'OPTIONS']:
