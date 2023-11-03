@@ -1,23 +1,24 @@
 from rest_framework import serializers
 
 from Resumes.models import Resume
+from Users.serializers import EmployerSerializer
 from .models import Vacancy, VacancyResponse
 
 
 class VacancySerializer(serializers.ModelSerializer):
     time_of_creation = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", read_only=True)
-
+    company = EmployerSerializer()
     class Meta:
         model = Vacancy
         fields = (
-            'name_company',
+            'company',
             'job_title',
             'salary',
             'description',
             'time_of_creation',
             'education',
             'schedule')
-        read_only_fields = ('name_company',)
+        read_only_fields = ('company',)
 
 
 
