@@ -7,6 +7,7 @@ class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
         fields = (
+            'id',
             'first_name',
             'last_name',
             'surname',
@@ -21,8 +22,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             'city',
             'country_of_citizenship',
         )
-        read_only_fields = ('user',)
-
+        read_only_fields = ('user', 'id',)
 
 
 class InvitationSerializer(serializers.ModelSerializer):
@@ -30,4 +30,3 @@ class InvitationSerializer(serializers.ModelSerializer):
         model = ResumeResponse
         fields = ('message',)
         read_only_fields = ('applicant', 'employer', 'resume',)
-

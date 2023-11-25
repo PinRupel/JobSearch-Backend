@@ -7,7 +7,8 @@ from .models import Vacancy, VacancyResponse
 
 class VacancySerializer(serializers.ModelSerializer):
     time_of_creation = serializers.DateTimeField(format="%Y-%m-%dT%H:%M:%S", read_only=True)
-    company = EmployerSerializer()
+    company = EmployerSerializer(read_only=True)
+
     class Meta:
         model = Vacancy
         fields = (
@@ -18,8 +19,6 @@ class VacancySerializer(serializers.ModelSerializer):
             'time_of_creation',
             'education',
             'schedule')
-        read_only_fields = ('company',)
-
 
 
 class CustomResumeForeignKey(serializers.PrimaryKeyRelatedField):
