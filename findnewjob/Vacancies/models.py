@@ -25,6 +25,9 @@ class Vacancy(models.Model):
     education = models.CharField(max_length=1, choices=CHOICES_EDUCATION)
     schedule = models.CharField(max_length=1, choices=CHOICES_SCHEDULE)
 
+    def __str__(self):
+        return f'{self.company},{self.job_title},{self.salary}'
+
 
 class VacancyResponse(models.Model):
     applicant = models.ForeignKey(to=Applicant, on_delete=models.CASCADE, related_name='sent_response')

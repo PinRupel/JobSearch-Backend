@@ -10,6 +10,5 @@ router.register(r'response', VacancyResponseAPIViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('vacancies/<int:pk>/', include(router.urls)),
     path('vacancies/response/<int:pk>/', GetVacancyResponseAPIView.as_view(), name='vacancy-response')
 ]

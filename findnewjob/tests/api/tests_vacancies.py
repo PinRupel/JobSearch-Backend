@@ -63,7 +63,7 @@ class VacancyAPITestCase(APITestCase):
         self.vacancies_filter = Vacancy.objects.filter(salary__gte=11000, salary__lte=60000, schedule='F',
                                                        education='H')
         self.vacancy_search_title = Vacancy.objects.filter(job_title__icontains='job')
-        self.vacancy_search_company = Vacancy.objects.filter(name_company__company_name__icontains='company')
+        self.vacancy_search_company = Vacancy.objects.filter(company__company_name__icontains='company')
     def test_get(self):
         url = reverse('Vacancies:vacancy-list')
         self.response_get = self.client.get(url)
@@ -107,3 +107,25 @@ class VacancyAPITestCase(APITestCase):
 
         self.assertEqual(self.response_search_title.data, search_serializer_title)
         self.assertEqual(self.response_search_company.data, search_serializer_company)
+
+    def test_delete(self):
+        vacancy_id = self.vacancies[0].id
+        url = reverse('Vacancies:vacancy-detail', kwargs={'pk': vacancy_id})
+        self.response_delete = self.client.delete(url)
+        self.assertEqual(self.response_delete.status_code, 204)
+
+        self.response_get = self.client.get(url)
+        self.assertEqual(self.response_get.status_code, 404)
+
+    def test_put(self):
+        vacancy_id = self.vacancies[0].id
+
+        url = reverse('Vacancies:vacancy-detail', kwargs={'pk': vacancy_id})
+        self.new_data = {
+            'job_title': 'job',
+            'salary': 110000,
+            'description': 'Test_description_bla_bla',
+            'education': 'H',
+            'schedule': 'F'
+        }
+        self.response_put = self.client.put(url, self.new_data)

@@ -1,15 +1,20 @@
-from rest_framework import viewsets, mixins, generics
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, mixins, generics, filters
 from rest_framework.generics import get_object_or_404
 
 from .models import Resume, ResumeResponse
 from Resumes.serializers import ResumeSerializer, InvitationSerializer
 from .permission import ResumePermission, ResumeResponsePermission
+from .filters import ResumeFilter
 
 
 class ResumeViewSet(viewsets.ModelViewSet):
     queryset = Resume.objects.all()
     serializer_class = ResumeSerializer
     permission_classes = [ResumePermission]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ResumeFilter
+    search_fields = ['profession']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user.applicant)
