@@ -63,7 +63,8 @@ class VacancyAPITestCase(APITestCase):
         self.vacancies_filter = Vacancy.objects.filter(salary__gte=11000, salary__lte=60000, schedule='F',
                                                        education='H')
         self.vacancy_search_title = Vacancy.objects.filter(job_title__icontains='job')
-        self.vacancy_search_company = Vacancy.objects.filter(name_company__company_name__icontains='company')
+        self.vacancy_search_company = Vacancy.objects.filter(company__company_name__icontains='company')
+
     def test_get(self):
         url = reverse('Vacancies:vacancy-list')
         self.response_get = self.client.get(url)
