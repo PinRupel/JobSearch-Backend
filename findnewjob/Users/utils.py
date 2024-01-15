@@ -12,7 +12,7 @@ class Verify:
         user_email = request.POST.get('email')
         user = User.objects.get(email=user_email)
         activation_code = ActivationKey.objects.get_or_create(user=user)
-        domain = get_current_site()
+        domain = get_current_site(request)
         verify_link = reverse('email-verify', kwargs={'activation_code': activation_code[0].code})
         email = EmailMessage(
             subject='Активация аккаунта', body=f'Что бы активировать аккаунт перейдите по ссылке ниже \n  {verify_link}',
