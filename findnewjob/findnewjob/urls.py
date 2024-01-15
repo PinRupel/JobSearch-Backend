@@ -17,10 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
+from Users.views import VerifyEmail
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('activate/<uuid:activation_code>', VerifyEmail.as_view(), name='email-verify'),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/users/', include('Users.urls', namespace='Users')),
-    path('api/', include('Resumes.urls', namespace='Resumes')),
+    path('api/', include('Resumes.urls', namespace='Resume')),
     path('api/', include('Vacancies.urls', namespace='Vacancies')),
 ]

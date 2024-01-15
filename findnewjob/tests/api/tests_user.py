@@ -70,9 +70,9 @@ class ApplicantRegisterApiTestCase(APITestCase):
             'password': 'TestingPassword1234567',
             'password2': 'TestingPassword1234567',
         }
-        self.response = self.client.post(reverse("Users:applicant-register"), self.payload)
 
     def test_create(self):
+        self.response = self.client.post(reverse("Users:applicant-register"), self.payload)
         self.assertEqual(self.response.status_code, 201)
         self.assertEqual(self.response.data.get('user')['email'], self.payload['email'])
         self.assertTrue(self.response.data.get('user')['is_applicant'])
