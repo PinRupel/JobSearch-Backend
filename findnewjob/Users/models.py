@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.utils import timezone
@@ -13,6 +14,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_employer = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_verified = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
 
     objects = CustomUserManager()
@@ -36,3 +38,8 @@ class Employer(models.Model):
     company_name = models.CharField(max_length=100, blank=False)
     email = models.EmailField(unique=True)
 
+
+class ActivationKey(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+    code = models.UUIDField(default=uuid.uuid4, editable=False)
